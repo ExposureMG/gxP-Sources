@@ -1,0 +1,198 @@
+# GXP-Source (GXS): Glitch3 (RGH3) for Jasper
+# Format: [Address]: [Hex Data...] # Comment
+
+# --- Error Processing ---
+0x129E: 02 12 D1
+
+# --- GPIO Bypass ---
+0x11E3: 80
+
+0x120B: 80
+
+# --- Debug LED Config ---
+0x2359: 00 00 00
+
+0x235E: C2
+
+# --- UART Keep-alive ---
+0x23CA: C0
+
+# --- Stack Relocation ---
+0x0758: BD
+
+0x0777: BD
+
+# --- MAIN RGH3 PAYLOAD ---
+0x2D73:
+    12 2D 7A 12 2D D4 22 78 A6 B6 00 FA 78 BA E6 30
+    E2 07 A2 E3 92 E0 C2 E2 F6 A2 E0 40 05 30 E1 E6
+    80 03 20 E1 E1 75 79 ED 30 E1 03 75 79 DF 12 26
+    71 20 D5 D2 78 A6 76 04 78 BA E6 D2 E2 A2 E1 92
+    E3 F6 22 C0 00 78 BC E6 43 BF 01 B5 77 02 80 0B
+    A6 77 B4 15 05 B6 01 02 80 01 D3 53 BF FE D0 00
+    22 78 BB 79 BA E7 20 86 02 76 00 B6 00 11 C2 C0
+    C2 E1 F7 20 E0 14 30 86 11 79 BD 77 FF 80 2C B6
+    01 02 80 2F B6 02 04 20 87 21 22 B6 03 22 43 BF
+    01 20 87 FD 30 87 FD 20 87 FD 30 87 FD D2 C0 53
+    BF FE C2 5B D2 E1 F7 79 BD 77 19 06 E6 02 2E A5
+    B6 04 0D 12 2D B6 50 D2 79 BD 17 E7 70 CC 80 EB
+    B6 05 49 C2 C0 43 BF 01 20 87 FD 7A 01 7B C0 7C
+    04 7D 04 7E A4 7F 02 A2 E4 40 02 7D 05 B2 E4 F7
+    DA FE DB FC 12 23 4F DC F7 D2 C0 30 87 FD 12 23
+    4F DD FE DE FC DF FA C2 86 D2 86 12 23 4F C2 C0
+    53 BF FE C2 E1 F7 79 BD 77 0A 80 9F B6 06 0D 80
+    A2 B6 09 27 30 0E 94 20 87 91 80 0C B6 07 0E 79
+    BD 77 00 D2 5B 30 87 83 76 0A 02 12 D1 B6 08 E1
+    80 81 24 30 F5 E7 74 09 D5 E0 FD 22
+
+0x07A4: 12 2F EA
+
+0x07A7: 12 2F E4
+
+0x07AA: 12 2F DE
+
+0x07AD: 12 2F D8
+
+0x07B0: 12 2F D2
+
+0x07B3: 12 2F CC
+
+0x07B6: 12 2F C6
+
+0x07B9: 12 2F C0
+
+0x07BC: 12 2F BA
+
+0x07BF: 12 2F B4
+
+# --- Remove DBG LED FSM ---
+0x07C2: 00 00 00
+
+0x07C5: 12 2F AE
+
+0x07C8: 12 2F A8
+
+0x07CB: 12 2F A2
+
+0x07CE: 12 2F 9C
+
+0x07D1: 12 2F 96
+
+0x07D4: 12 2F 90
+
+0x07D7: 12 2F 8A
+
+0x07DA: 12 2F 84
+
+0x07DD: 12 2F 7E
+
+0x07E0: 12 2F 78
+
+0x07E3: 12 2F 72
+
+# --- Loop Hijack Stub (orig: 0x1D2A) ---
+0x2FEA: 12 2D 73 02 1D 2A
+
+# --- Loop Hijack Stub (orig: 0x14B1) ---
+0x2FE4: 12 2D 73 02 14 B1
+
+# --- Loop Hijack Stub (orig: 0x1CA2) ---
+0x2FDE: 12 2D 73 02 1C A2
+
+# --- Loop Hijack Stub (orig: 0x1391) ---
+0x2FD8: 12 2D 73 02 13 91
+
+# --- Loop Hijack Stub (orig: 0x20C6) ---
+0x2FD2: 12 2D 73 02 20 C6
+
+# --- Loop Hijack Stub (orig: 0x136A) ---
+0x2FCC: 12 2D 73 02 13 6A
+
+# --- Loop Hijack Stub (orig: 0x1BD9) ---
+0x2FC6: 12 2D 73 02 1B D9
+
+# --- Loop Hijack Stub (orig: 0x2236) ---
+0x2FC0: 12 2D 73 02 22 36
+
+# --- Loop Hijack Stub (orig: 0x2044) ---
+0x2FBA: 12 2D 73 02 20 44
+
+# --- Loop Hijack Stub (orig: 0x14C6) ---
+0x2FB4: 12 2D 73 02 14 C6
+
+# --- Loop Hijack Stub (orig: 0x1DE9) ---
+0x2FAE: 12 2D 73 02 1D E9
+
+# --- Loop Hijack Stub (orig: 0x119B) ---
+0x2FA8: 12 2D 73 02 11 9B
+
+# --- Loop Hijack Stub (orig: 0x1072) ---
+0x2FA2: 12 2D 73 02 10 72
+
+# --- Loop Hijack Stub (orig: 0x12D5) ---
+0x2F9C: 12 2D 73 02 12 D5
+
+# --- Loop Hijack Stub (orig: 0x1127) ---
+0x2F96: 12 2D 73 02 11 27
+
+# --- Loop Hijack Stub (orig: 0x0EA9) ---
+0x2F90: 12 2D 73 02 0E A9
+
+# --- Loop Hijack Stub (orig: 0x1A3A) ---
+0x2F8A: 12 2D 73 02 1A 3A
+
+# --- Loop Hijack Stub (orig: 0x22C2) ---
+0x2F84: 12 2D 73 02 22 C2
+
+# --- Loop Hijack Stub (orig: 0x1DD7) ---
+0x2F7E: 12 2D 73 02 1D D7
+
+# --- Loop Hijack Stub (orig: 0x19F3) ---
+0x2F78: 12 2D 73 02 19 F3
+
+# --- Loop Hijack Stub (orig: 0x2338) ---
+0x2F72: 12 2D 73 02 23 38
+
+# --- Relocated I2C Handler ---
+0x2F48:
+    F2 F2 F2 F2 F2 F2 F2 F2 F2 F2 F2 F2 F2 F2 F2 22
+    A2 C9 B3 22 75 DB 00 75 DC 00 75 DD E1 75 DE 83
+    75 D8 B0 75 88 00 75 95 88 22
+
+# --- I2C Delay Ref ---
+0x2681: 12 2F 48
+
+# --- I2C Delay Ref ---
+0x2687: 12 2F 48
+
+# --- I2C Delay Ref ---
+0x26C9: 12 2F 48
+
+# --- I2C Delay Ref ---
+0x26CE: 12 2F 48
+
+# --- I2C Delay Ref ---
+0x2A67: 12 2F 48
+
+# --- I2C Delay Ref ---
+0x2A6C: 12 2F 48
+
+# --- I2C Line Status Ref ---
+0x26BB: 12 2F 58
+
+0x2A6F: 12 2F 58
+
+# --- I2C HW Trigger ---
+0x26D1: 12 2F 5C
+
+# --- HANA Overclocking Table ---
+0x2A38:
+    00 0B CE 28 E8 40 14 0B D4 09 90 E0 1E 03 00 0B
+    CE 08 E8 40 14 0B D4 09 90 E0 0E 03
+
+# --- Pre-Main Init Stubs ---
+0x13CE: 78 BA 76 00 75 E9 FF 02 26 24
+
+# --- Init Hook ---
+0x0770: 12 13 CE
+

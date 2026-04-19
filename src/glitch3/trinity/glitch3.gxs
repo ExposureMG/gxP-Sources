@@ -1,0 +1,80 @@
+# GXP-Source (GXS): Glitch3 (RGH3) for Trinity
+# Format: [Address]: [Hex Data...] # Comment
+
+# --- Error Processing ---
+0x13A2: 02 13 D8
+
+# --- GPIO Bypass ---
+0x1308: 80
+
+0x1321: 80
+
+# --- Debug LED Config ---
+0x248A: 00 00 00
+
+0x248F: C2
+
+# --- UART Keep-alive ---
+0x2502: C0
+
+# --- Stack Relocation ---
+0x07E5: C3
+
+0x0804: C3
+
+# --- MAIN RGH3 PAYLOAD ---
+0x2EE9:
+    D1 EE F1 2A 22 78 A7 B6 00 FA 78 C0 E6 30 E2 07
+    A2 E3 92 E0 C2 E2 F6 A2 E0 40 05 30 E1 E6 80 03
+    20 E1 E1 75 7A E7 30 E1 03 75 7A DF 12 27 E1 20
+    D5 D2 78 A7 76 04 78 C0 E6 D2 E2 A2 E1 92 E3 F6
+    22 78 C1 79 C0 E7 20 86 02 76 00 B6 00 11 C2 C0
+    C2 E1 F7 20 E0 14 30 86 11 79 C3 77 FF 80 2C B6
+    01 02 80 2E B6 02 04 20 87 21 22 B6 03 21 43 BF
+    01 20 87 FD 30 87 FD 20 87 FD 30 87 FD D2 C0 53
+    BF FE C2 5F D2 E1 F7 79 C3 77 19 06 E6 80 76 B6
+    04 0D 12 14 C9 50 D3 79 C3 17 E7 70 CD 80 EC B6
+    05 40 C2 C0 43 BF 01 20 87 FD 7A 80 7B E2 7C 02
+    7D 9A 7E 18 7F 05 DA FE DB FC 12 24 80 DC F7 D2
+    C0 30 87 FD 12 24 80 DD FE DE FC DF FA C2 86 D2
+    86 12 24 80 C2 C0 53 BF FE C2 E1 F7 79 C3 77 0A
+    80 A9 B6 06 0A 80 AB B6 09 1F 20 87 9E 80 0C B6
+    07 0E 79 C3 77 00 D2 5F 30 87 90 76 0A 02 13 D8
+    B6 08 E4 80 8D 24 30 F5 E7 22
+
+# --- Custom Loop Hook ---
+0x0869: 12 2E E9
+
+# --- Internal Cycle Extension ---
+0x087C: EC
+
+# --- Custom Delay Func ---
+0x2FF3: 7A 09 DA FE 22
+
+# --- Delay Ref ---
+0x27F1: 12 2F F3
+
+# --- Delay Ref ---
+0x27F7: 12 2F F3
+
+# --- Delay Ref ---
+0x2839: 12 2F F3
+
+# --- Delay Ref ---
+0x283E: 12 2F F3
+
+# --- Delay Ref ---
+0x2BDD: 12 2F F3
+
+# --- HANA Overclocking Table ---
+0x2BAE: 00 0B CE 28 E8 40 14 03 00 0B CE 08 E8 40 14 03
+
+# --- Pre-Main Init Stubs ---
+0x14BF:
+    78 C0 76 00 75 E9 FF 02 27 94 C0 00 78 C2 E6 43
+    BF 01 B5 78 02 80 0B A6 78 B4 15 05 B6 01 02 80
+    01 D3 53 BF FE D0 00 22
+
+# --- Init Hook ---
+0x07FD: 12 14 BF
+
