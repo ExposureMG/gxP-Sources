@@ -7,8 +7,10 @@ Also contains a Patch Converter (gxp-converter)
 ## About
 
 JSON: Signature-based patches
+
 GXS (GX Source): One compiled section of GXP
-GXP (GX Patchset): Compiled and built multi-patch binaries
+
+GXP (GX Patchset): Compiled and built multi-patch binaries, can contain GXS, XEPATCH, or both.
 
 All patches built for xeBuild will work on gxBuild; The major difference in GXP is a 16-byte header at the beginning to stop backwards compatibility. xeBuild has no GXS support, and would interpret 4-section RGH patches as JTAG patches.
 
