@@ -38,6 +38,15 @@ XEPATCH: Traditional xeBuild patches
 GXP: Compiled multi-section patch binary
 
 
+## Planned
+
+Expand GXS with Macros and some more asm statements
+
+Make GXS feasible to translate RGLoader XEPATCHes into
+
+Cleanup LP GXS translations and re-add comments
+
+
 ## Converter
 
 In [src](/src), there is a rust tool to:
