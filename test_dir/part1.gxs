@@ -5,9 +5,13 @@
 
 # ASM section that will be compiled
 [ASM] 0x2000:
-	mfmsr   %r5
-	li      %r6, 0x10
-	andc    %r6, %r5, %r6
+	mfmsr %r5
+	li %r6, 16
+	andc %r6, %r5, %r6
+	or %r11, %r11, %r10
+	xori %r11, %r11, 1
+[!ASM]
+
 
 # Another regular patch
 0x3000: 60 00 00 00

@@ -53,7 +53,7 @@ enum Commands {
         kernel: u32,
         /// Motherboard Enum (0 = Any)
         #[arg(short, long, default_value = "0")]
-        board: u16,
+        motherboard: u16,
         /// Patch Type (0=4RGH, 1=5JTAG, 2=4JTAG, 3=3RGH, 4=Standalone, 5=Addon)
         #[arg(short, long, default_value = "0")]
         patch_type: u8,
@@ -136,8 +136,8 @@ fn parse_asm_section(lines: &[&str], start_idx: usize) -> Option<AsmSection> {
         if trimmed.is_empty() || trimmed.starts_with('#') {
             continue;
         }
-        // Stop at next section or directive
-        if trimmed.starts_with('[') || trimmed.starts_with('.') {
+        // Stop at [!ASM] end marker or next section/directive
+        if trimmed.starts_with("[!ASM]") || trimmed.starts_with('[') || trimmed.starts_with('.') {
             break;
         }
         code_lines.push(trimmed);
@@ -164,38 +164,53 @@ fn compile_asm_section(asm: &AsmSection) -> Result<Vec<u8>> {
 }
 
 fn compile_asm_linux(asm: &AsmSection) -> Result<Vec<u8>> {
+    // Use xenon-as directly with proper syntax
+    try_assembler_compilation(asm)
+}
+
+
+fn try_assembler_compilation(asm: &AsmSection) -> Result<Vec<u8>> {
     // Create temporary assembly file
     let asm_file = NamedTempFile::with_suffix(".s")?;
     let obj_file = NamedTempFile::with_suffix(".o")?;
     let bin_file = NamedTempFile::with_suffix(".bin")?;
     
-    // Write assembly with proper directives
+    // Write assembly with proper directives for xenon assembler
+    // Include the macro definitions that are used in working txt files
     let asm_content = format!(
-        "\n\n    .org 0x{:08X}\n    .globl _start\n_start:\n{}\n",
-        asm.addr, asm.code
+        ".set KBASE, 0x80000000
+.set hrmor, 313
+.set ctr, 9
+.set lr, 8
+.text
+.globl _start
+_start:
+{}
+",
+        asm.code
     );
     fs::write(asm_file.path(), asm_content)?;
     
-    // Compile with powerpc-linux-gnu-as
-    let output = Command::new("powerpc-linux-gnu-as")
+    // Compile with local xenon-as (Linux version)
+    let output = Command::new("./bin/xenon-as")
         .arg("-o")
         .arg(obj_file.path())
         .arg(asm_file.path())
         .output()
-        .context("Failed to run powerpc-linux-gnu-as. Install with: sudo apt-get install binutils-powerpc-linux-gnu")?;
+        .context("Failed to run ./bin/xenon-as")?;
     
     if !output.status.success() {
         return Err(anyhow::anyhow!("Assembly compilation failed: {}", String::from_utf8_lossy(&output.stderr)));
     }
     
-    // Extract raw binary
-    let output = Command::new("powerpc-linux-gnu-objcopy")
+    // Extract raw binary with local xenon-objcopy (Linux version)
+    let output = Command::new("./bin/xenon-objcopy")
         .arg("-O")
         .arg("binary")
         .arg(obj_file.path())
         .arg(bin_file.path())
         .output()
-        .context("Failed to run powerpc-linux-gnu-objcopy")?;
+        .context("Failed to run ./bin/xenon-objcopy")?;
     
     if !output.status.success() {
         return Err(anyhow::anyhow!("Object copy failed: {}", String::from_utf8_lossy(&output.stderr)));
@@ -210,33 +225,33 @@ fn compile_asm_windows(asm: &AsmSection) -> Result<Vec<u8>> {
     let obj_file = NamedTempFile::with_suffix(".o")?;
     let bin_file = NamedTempFile::with_suffix(".bin")?;
     
-    // Write assembly with proper directives
+    // Write assembly with proper directives for xenon assembler
     let asm_content = format!(
-        "\n\n    .org 0x{:08X}\n    .globl _start\n_start:\n{}\n",
-        asm.addr, asm.code
+        "\n.set KBASE, 0x80000000\n.set hrmor, 313\n.set ctr, 9\n.set lr, 8\n    .text\n    .globl _start\n_start:\n{}\n",
+        asm.code
     );
     fs::write(asm_file.path(), asm_content)?;
     
-    // Compile with xenon-as.exe (assuming it's in PATH)
-    let output = Command::new("xenon-as.exe")
+    // Compile with local xenon-as.exe
+    let output = Command::new("./bin/xenon-as.exe")
         .arg("-o")
         .arg(obj_file.path())
         .arg(asm_file.path())
         .output()
-        .context("Failed to run xenon-as.exe. Ensure Xenon GCC toolchain is in PATH")?;
+        .context("Failed to run ./bin/xenon-as.exe")?;
     
     if !output.status.success() {
         return Err(anyhow::anyhow!("Assembly compilation failed: {}", String::from_utf8_lossy(&output.stderr)));
     }
     
-    // Extract raw binary
-    let output = Command::new("xenon-objcopy.exe")
+    // Extract raw binary with local xenon-objcopy.exe
+    let output = Command::new("./bin/xenon-objcopy.exe")
         .arg("-O")
         .arg("binary")
         .arg(obj_file.path())
         .arg(bin_file.path())
         .output()
-        .context("Failed to run xenon-objcopy.exe")?;
+        .context("Failed to run ./bin/xenon-objcopy.exe")?;
     
     if !output.status.success() {
         return Err(anyhow::anyhow!("Object copy failed: {}", String::from_utf8_lossy(&output.stderr)));
@@ -333,13 +348,13 @@ fn main() -> Result<()> {
                 write_part(&out_path, part_idx, &current_part_records, &input)?;
             }
         }
-        Commands::Pack { input_dir, output, kernel, board, patch_type, bootloader, offset } => {
+        Commands::Pack { input_dir, output, kernel, motherboard, patch_type, bootloader, offset } => {
             let mut gxp_file = File::create(&output)?;
             
             // 1. Write Header (16 bytes)
             gxp_file.write_all(b"GXP\0")?;
             gxp_file.write_all(&kernel.to_be_bytes())?;
-            gxp_file.write_all(&board.to_be_bytes())?;
+            gxp_file.write_all(&motherboard.to_be_bytes())?;
             gxp_file.write_all(&[patch_type])?;
             gxp_file.write_all(&[bootloader])?;
             gxp_file.write_all(&offset.to_be_bytes())?;
@@ -380,7 +395,7 @@ fn main() -> Result<()> {
                                     println!("  Compiled ASM at 0x{:08X}", asm_section.addr);
                                 }
                                 Err(e) => {
-                                    eprintln!("  Warning: Failed to compile ASM at 0x{:08X}: {}", asm_section.addr, e);
+                                    return Err(anyhow::anyhow!("Failed to compile ASM at 0x{:08X}: {}", asm_section.addr, e));
                                 }
                             }
                             // Skip to next section

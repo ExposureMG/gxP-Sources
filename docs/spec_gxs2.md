@@ -28,13 +28,34 @@ Multi-line patches are also supported:
 
 ## PPC ASM
 
-PowerPC ASM patches are compiled to hex during the conversion process:
+PowerPC ASM patches are compiled to hex during the conversion process using xenon-as.
+
+### ASM Syntax
+
+ASM sections use the following syntax:
 
 ```
+[ASM] 0xADDRESS:
+	<assembly instructions>
+[!ASM]
+```
+
+**Requirements:**
+- Start with `[ASM] 0xADDRESS:` where ADDRESS is the target memory location
+- End with `[!ASM]` marker
+- Use comma-separated syntax for xenon-as compatibility
+- Registers use `%rX` format (e.g., `%r5`, `%r6`)
+- Immediate values can be decimal or hex (e.g., `16` or `0x10`)
+
+**Example:**
+```
 [ASM] 0xE70:
-	mfmsr   %r5 
-        li      %r6, 0x10
-        andc    %r6, %r5, %r6
+	mfmsr   %r5
+	li      %r6, 16
+	andc    %r6, %r5, %r6
+	or      %r11, %r11, %r10
+	xori    %r11, %r11, 1
+[!ASM]
 ```
 
 ### Compilation Process
@@ -42,15 +63,41 @@ PowerPC ASM patches are compiled to hex during the conversion process:
 ASM sections are compiled using platform-specific toolchains:
 
 **Linux:**
-- Uses `powerpc-linux-gnu-as` from GNU binutils
-- Requires `powerpc-linux-gnu-objcopy` for binary extraction
+- Uses `./bin/xenon-as` from local bin directory
+- Uses `./bin/xenon-objcopy` for binary extraction
 
 **Windows:**
-- Uses `xenon-as.exe` from Xenon GCC toolchain
-- Requires `xenon-objcopy.exe` for binary extraction
+- Uses `./bin/xenon-as.exe` from local bin directory  
+- Uses `./bin/xenon-objcopy.exe` for binary extraction
 
 **macOS:**
-- **Not supported** - ASM compilation will fail with error message
+- ASM compilation is not supported
+
+### TXT vs GXS Comparison
+
+**Traditional TXT Format:**
+```
+.code b 0xE3C
+                 or        %r11, %r11, %r10 # do what we patched did originally
+                 xori      %r11, %r11, 1   # remove the unpaired bit
+.eoc
+```
+
+**GXS 2.0 ASM Format:**
+```
+[ASM] 0xE3C:
+	or %r11, %r11, %r10
+	xori %r11, %r11, 1
+[!ASM]
+```
+
+**Benefits of GXS ASM:**
+- No need for `.code`/`.eoc` directives
+- No need for comments or alignment
+- Direct address specification
+- Automatic compilation to binary during pack process
+- Cleaner, more readable syntax
+- Full PowerPC instruction support via xenon-as
 
 ### Macro Support
 
