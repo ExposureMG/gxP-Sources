@@ -1,9 +1,0 @@
-[submodule "references/smc360"]
-	path = references/smc360
-	url = https://github.com/wurthless-elektroniks/smc360
-[submodule "references/badjasper"]
-	path = references/badjasper
-	url = https://github.com/wurthless-elektroniks/badjasper
-[submodule "references/RGH3"]
-	path = references/RGH3
-	url = https://github.com/15432/RGH3

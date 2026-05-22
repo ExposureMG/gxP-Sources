@@ -5,7 +5,7 @@
 
 # Devkit 14699 patches
 
-.include "..\\..\\macros.S"
+.include "../macros.S"
 
 
 		.globl _start

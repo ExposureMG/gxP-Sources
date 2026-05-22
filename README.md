@@ -47,14 +47,6 @@ Make GXS feasible to translate RGLoader XEPATCHes into
 Cleanup LP GXS translations and re-add comments
 
 
-## Converter
-
-In [src](/src), there is a rust tool to:
-
-- Convert XEPATCH to GXS
-- Create GXS from a diff
-- Compile and Pack GXS sections into a GXP binary
-
 ## License
 
 Leaving unlicensed as no party involved has given me permission.
