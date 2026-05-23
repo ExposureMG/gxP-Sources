@@ -4,9 +4,15 @@ Unlicensed repo of source code for GXP, GXS and JSON patches.
 
 ## Disclaimer
 
-I did not make a SINGLE PATCH in this repo! I have translated a few to my own formats but this is entierely based on the work of other people!
+I did not make a SINGLE PATCH in this repo! I have translated a few to my own formats but this is entierely based on the work of other people! I am NOT taking credit for these.
 
-I am NOT taking credit for these.
+LP and GXS are mostly compatible so I manually translated them.
+
+Glitch3 v2 is open source so i manually translated it to GXS.
+
+CR4 and Glitch3 v1 GXS were made with [gx-dev-tools](https://github.com/ExposureMG/gx-dev-tools).
+
+Various SMC patches were created from wurthless-elektroniks' [smc360](https://github.com/wurthless-elektroniks/smc360) and Swizzy's [x360utils](https://github.com/Swizzy/x360Utils).
 
 ## Contains
 
